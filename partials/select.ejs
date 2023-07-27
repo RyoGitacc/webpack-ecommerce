@@ -1,0 +1,15 @@
+
+
+<div class="select <%= data.label %>">
+ <label class="label"><%= data.label %></label>
+ <div class="selected-value-container">
+    <span class="selected-value"><%= data.label === "Category" ? "All categories" : "Any type" %></span>
+    <img class="down-arrow" alt=""/>
+ </div>
+ <ul class="select-menu">
+    <% data.values.forEach((e,index)=>{ %>
+      <li class="option"><%- e %></li>
+    <% }); %>
+ </ul>
+</div>
+

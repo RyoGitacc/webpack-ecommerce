@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <style>
+  
+  
+
+  </style>
+  <body style="display: none;">
+    <div class="home">
+      <%- include('../partials/navbar.ejs')%>
+      <%- include('../partials/carousel.ejs') %>
+      <div class="contents">
+        <section class="feature-container">
+          <ul class="feature-list">
+            <li class="list1">
+              <div class="feature summersale">
+                Summer sale
+                <span class="summersale-label">up to 40% off</span>
+              </div>
+              <div class="feature force-majeure">
+                  Force-majeure<br>
+                  <span>Now on sale</span>
+                </div>
+              </li>
+              <li class="list2">
+                <div class="feature sneaker">
+                  <div class="shadow">
+                    Sneaker <br>collection
+                  </div>
+                </div>
+              </li>
+              <li class="list3">
+                <div class="feature accessories">
+                  Accessories
+                </div>
+                <div class="feature new-Arrival">
+                  New arrivals
+                </div>
+              </li>
+            </ul>
+          </section>
+          <section class="main-contents">
+            <p class="contents-title">Line up</p>
+            <p class="collapse-btn-container">
+              <button class="filter-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
+                + add filter
+              </button>
+            </p>
+            <div class="collapse" id="collapse">
+              <ul class="filter-list">
+                <li class="filter-item">
+                  <%- include("../partials/select.ejs",{data:categories}) %>
+                </li>
+                <li class="filter-item">
+                  <%- include("../partials/select.ejs",{data:type}) %>
+                </li>
+                <li class="filter-item">
+                  <%- include("../partials/slider.ejs") %>
+                </li>
+                <li class="filter-item">
+                  <button class="submit-btn">filter</button>
+                </li>
+              </ul>
+            </div>
+            <div class="sort-container">
+              <select class="sort" name="sort">
+                <option value="all">sort</optiom>
+                  <option value="price">low Price</option>
+                  <option value="date">new date</option>
+                  <option value="highRating">high rating</option>
+                </select>
+              </div>
+              <div class="product-container"></div>
+              <div class="footer"></div>
+            </section>
+          </div>
+          <%- include('../partials/shoppingCart.ejs')%>
+     
+        </div>
+        
+        
+        <script src="bundle.js"></script>
+        <script>
+          // const filterList = document.querySelector('.filter-list');
+           
+          // function openSelect(target){
+          //       const arrow = target.children[1];
+          //       arrow.style.transform="rotate(180deg)"
+          //       const selectMenu = target.nextElementSibling;
+          //       const numOfOptions = selectMenu.children.length;
+          //       selectMenu.style.height=`${numOfOptions * 30}px`;
+          //       selectMenu.style.borderBottom="1.5px solid #999994";
+          //       target.classList.add("open");
+          //       target.style.borderBottom="none"
+          // }
+
+          // function closeSelect(target){
+          //   const arrow = target.children[1];
+          //   arrow.style.transform="rotate(0deg)"
+          //   const selectMenu = target.nextElementSibling;
+          //   selectMenu.style.height="0px";
+          //   setTimeout(()=>{
+          //        selectMenu.style.borderBottom="none"
+          //        target.style.borderBottom="1.5px solid #999994";
+          //   },200)
+          //   target.classList.remove("open");
+          // }
+
+          // function selectOption(option){
+          //   const selectedOption=option.innerText;
+          //   const select=option.closest('.select');
+          //   const selectedValueContainer = select.querySelector('.selected-value-container')
+          //   const selectedValue = selectedValueContainer.children[0];
+          //   selectedValue.innerText=selectedOption;
+          //   closeSelect(selectedValueContainer);
+          // }
+
+          // function triggerFilterEvent(e){
+          // if(e.target.classList.contains("selected-value-container")){
+          //     if(e.target.classList.contains('open')){
+          //       closeSelect(e.target)
+          //     }
+          //     else{
+          //       openSelect(e.target)
+          //     }
+          //  }
+          //  else if(e.target.classList.contains('option')){
+          //     selectOption(e.target)
+          //  }
+          // }
+          // filterList.addEventListener('click',(e)=>triggerFilterEvent(e))
+        </script>
+</body>
+</html>

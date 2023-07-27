@@ -1,0 +1,50 @@
+// import path from 'path';
+const autoprefixer = require('autoprefixer')
+const path = require('path')
+
+module.exports={
+    mode:'development',
+    entry:{
+        bundle:path.resolve(__dirname,'public/js/core.js'),
+    },
+    output:{
+     path:path.resolve(__dirname,'dist'),
+     filename:"[name].js",
+     clean:true,
+     assetModuleFilename:'[name][ext]'
+    },
+    module:{
+        rules:[
+            {
+                test:/\.(scss|css)$/,
+                use:[
+                     {loader:'style-loader'},
+                     {loader:'css-loader'},
+                     {loader:'sass-loader'},
+                     {loader:'postcss-loader',
+                      options:{
+                        postcssOptions:{
+                            plugins:()=>[
+                                autoprefixer
+                            ]
+                        }
+                      }}
+                    ]
+            },
+            {
+                test:/\.js$/,
+                exclude:/node_modules/,
+                use:{
+                    loader:'babel-loader',
+                    options:{
+                        presets:["@babel/preset-env"]
+                    }
+                }
+            },
+            {
+                test:/\.(png|svg|jpg|jpeg|gif|webp|svg)$/i,
+                type:'asset/resource'
+            }
+        ]
+    },
+}
