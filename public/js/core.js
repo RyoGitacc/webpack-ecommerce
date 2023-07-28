@@ -14,28 +14,23 @@ import * as bootstrap from 'bootstrap'
 //import icons
 import cart from '../assets/icons/cart.svg';
 import downArrow from '../assets/icons/down-arrow.svg';
-import upArrow from '../assets/icons/up-arrow.svg';
 import heart from '../assets/icons/heart.svg';
 import login from '../assets/icons/login.svg';
 import search from '../assets/icons/search.svg';
 import search2 from '../assets/icons/search2.svg';
 
 //import images
-import summersale from '../assets/image/summersale.webp'
-import accessories from '../assets/image/accessories.webp'
-import forceMajeure from '../assets/image/force-majeure.webp'
 import guyInShirt from '../assets/image/guy-in-shirt.webp'
-import newArrivals from '../assets/image/newarrivals.webp'
 import poloShirt from '../assets/image/polo-shirt.webp'
 import sleeveless from '../assets/image/sleevelesstop.webp'
-import sneakerStyle from '../assets/image/sneaker-style.webp'
 import sportbra from '../assets/image/sportbra.webp'
 
 
 
 
-const productContainer=document.querySelector(".product-container");
+
 const genderContainer=document.querySelector('.gender-container');
+const mobileGenderContainer=document.querySelector('.mobile-gender-container')
 const sort = document.querySelector(".sort");
 const searchbar= document.querySelector('.searchbar');
 const list2 = document.querySelector('.list2');
@@ -122,6 +117,7 @@ function checkScrollToBottom(){
 
 // trigger filter events
 filterList.addEventListener('click',(e)=>triggerFilterEvent(e));
+
 // trigger sorting events
 sort.addEventListener('change',()=>sortItems(sort.value));
 
@@ -134,6 +130,7 @@ searchbar.addEventListener('submit', searchItem)
 
 //handle click gender button event on navigation bar
 genderContainer.addEventListener('click',(e)=>selectGender(e));
+mobileGenderContainer.addEventListener('click',(e)=>selectGender(e))
 
 // handle events when window is scrolled
 window.addEventListener('scroll',()=>{

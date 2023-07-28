@@ -351,6 +351,22 @@ select:focus{
       height: 170px;
 
   }
+  .filter-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 10px;
+     
+}
+.filter-list .filter-item{
+    width:100%;
+    margin: 0;
+}
+.filter-list .filter-list .filter-item:nth-child(4){
+    width:100%;
+    display: flex;
+    justify-content: center;
+}
   .product-container{
     gap: 10px;
   }
