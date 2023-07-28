@@ -27,10 +27,10 @@ export function selectOption(option){
     const selectedValue = selectedValueContainer.children[0];
     selectedValue.innerText=option.innerText;
     if(select.classList.contains('Category')){
-        selectedCategory=option.innerText
+        selectedCategory = option.innerText === "All categories" ? "":option.innerText;
     }
     else if(select.classList.contains('Type')){
-        selectedType = option.innerText
+        selectedType = option.innerText === "Any type" ? "" : option.innerText;
     }
  
     closeSelect(selectedValueContainer);

@@ -1,10 +1,20 @@
 
+const spinnerText= `<div class="spinner-container">
+                          <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                         </div>`;
+
+const template=document.createElement('div');
+template.innerHTML=spinnerText.trim();
+export const spinner = template.firstChild;
+
 
 export function createCard(card){
     var cardText=`  
     <div class="card">
-      <img alt="" class="heart-plus">
-      <img src="../assets/productImage/${card.img}" alt="" class="card-img">
+      <img src=${require('../assets/icons/heart-plus.svg')} alt="" class="heart-plus">
+      <img src=${require('../assets/productImage/' + card.img)} alt="" class="card-img">
       <div class="card-body">
         <p class="card-name">${card.name}</p>
         $${card.price}
@@ -47,13 +57,14 @@ export function createCard(card){
       for(var i=0;i<quotient;i++){
           const star = document.createElement('img');
           star.classList="star"
-          
+          star.src=require('../assets/icons/star.svg')
           starsContainer.appendChild(star);
       }
   
       if(remainder > 0.2){
           const halfStar=document.createElement('img');
           halfStar.classList="half-star"
+          halfStar.src=require('../assets/icons/half-star.svg')
           starsContainer.appendChild(halfStar)
       }
   
