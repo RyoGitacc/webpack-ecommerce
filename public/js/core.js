@@ -34,8 +34,6 @@ import sportbra from '../assets/image/sportbra.webp'
 
 
 
-// const URL = "https://fashion-site2023-b1bf572760a8.herokuapp.com/"
-const URL= "http://localhost:8080/"
 const productContainer=document.querySelector(".product-container");
 const genderContainer=document.querySelector('.gender-container');
 const sort = document.querySelector(".sort");

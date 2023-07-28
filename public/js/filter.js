@@ -5,8 +5,8 @@ const productContainer=document.querySelector(".product-container");
 const sort = document.querySelector(".sort");
 
 
-// const URL = "https://fashion-site2023-b1bf572760a8.herokuapp.com/"
-const URL = "http://localhost:8080/"
+const URL = "https://stormy-tundra-83234-974f64c39645.herokuapp.com/"
+// const URL = "http://localhost:8080/"
 
 
 
