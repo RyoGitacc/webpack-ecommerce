@@ -3,7 +3,7 @@ const autoprefixer = require('autoprefixer')
 const path = require('path')
 
 module.exports={
-    mode:'development',
+    mode:'production',
     entry:{
         bundle:path.resolve(__dirname,'public/js/core.js'),
     },
