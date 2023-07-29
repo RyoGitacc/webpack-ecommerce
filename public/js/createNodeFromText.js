@@ -9,7 +9,7 @@ const template=document.createElement('div');
 template.innerHTML=spinnerText.trim();
 export const spinner = template.firstChild;
 
-
+//create card node from text
 export function createCard(card){
     var cardText=`  
     <div class="card">
@@ -70,3 +70,35 @@ export function createCard(card){
   
       return cardNode;
   }
+
+//create cartItem node fron text
+export function createcartItemNode(cartItem){
+  var cartItemText=`
+         <div class="cart-item" id=${cartItem.id}>
+              <ul class="cart-item-list">
+                <li class="cart-item-left">
+                   <img src="../assets/productImages/${cartItem.img}" alt="" class="cart-item-img">
+                </li>
+                <li class="cart-item-middle">
+                  <p class="cart-item-name">${cartItem.name}</p>
+                   $${cartItem.price}
+                  <div class="cart-quantity-btns">
+                    <button class="minus-btn">-</button>
+                    <span class="cart-item-quantity">${cartItem.quantity}</span>
+                    <button class="plus-btn">+</button>
+                  </div>
+                </li>
+                <li class="cart-item-right">
+                  $<span class="cart-item-total">${cartItem.price * cartItem.quantity}</span>
+                  <button class="cart-remove-btn">X</button>
+                </li>
+             </ul>
+         </div>`
+
+  const template=document.createElement('div');
+  template.innerHTML=cartItemText.trim();
+  const cartItemNode = template.firstChild;
+
+  return cartItemNode;
+
+}

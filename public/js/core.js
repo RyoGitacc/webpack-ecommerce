@@ -3,9 +3,11 @@ import '../css/navbar.scss'
 import '../css/carousel.scss'
 import '../css/select.scss'
 import '../css/slider.scss'
+import '../css/shoppingCart.scss'
 import { moveNavBottomMobile, triggerClickEvent} from './navbar.js'
 import {openSelect,closeSelect,selectOption,selectedCategory,selectedType} from './select.js'
-import { handleSlider, min,max} from './slider'
+import { handleSlider, min,max} from './slider';
+import { clickQuantityButton, updateCart } from './shoppingCart'
 import { loadMoreCards, loadFirstCards,selectGender, filterItems,hasMoreItems, isLoading, sortItems, searchItem} from './filter'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Collapse,Carousel,Spinner } from "bootstrap";
@@ -34,7 +36,9 @@ const mobileGenderContainer=document.querySelector('.mobile-gender-container')
 const sort = document.querySelector(".sort");
 const searchbar= document.querySelector('.searchbar');
 const list2 = document.querySelector('.list2');
-const shadow = document.querySelector('.shadow')
+const shadow = document.querySelector('.shadow');
+const productContainer=document.querySelector(".product-container");
+const cartBody = document.querySelector('.cart-body');
 
 //set icons to navigation bar
 const iconsForNavbar=[search,login,heart,cart]
@@ -64,7 +68,6 @@ downArrowSVGs.forEach(d=>{
 //handle shodow for sneaker styles on and off
 function handleShadow(){
     const rect = list2.getBoundingClientRect();
-    console.log(rect.top)
     if(rect.top > -200 && rect.top < 100){
       shadow.style.opacity=1;
       shadow.style.visibility="visible"
@@ -115,6 +118,35 @@ function checkScrollToBottom(){
      }
 }
 
+// add item to cart when add to cart butoon is clicked
+function addToCart(e){
+    if(e.target.matches(".add-cart-btn")){
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const clickedItem=JSON.parse(e.target.getAttribute('data'));
+         console.log(clickedItem)
+        if(cartItems.length > 0){
+            if(cartItems.find(c=>c.id === clickedItem.id) === undefined){
+                cartItems.push(clickedItem);
+            }
+            else{
+                cartItems.forEach(c => {
+                    if(c.id === clickedItem.id){
+                        c.quantity += 1;
+                    }
+                });
+            }
+        }
+        else{
+            cartItems.push(clickedItem)
+        }
+
+        localStorage.setItem('cartItems',JSON.stringify(cartItems))
+        
+        updateCart();
+        alert(`${clickedItem.name} is added to shopping cart!`)
+    }
+}
+
 // trigger filter events
 filterList.addEventListener('click',(e)=>triggerFilterEvent(e));
 
@@ -130,7 +162,12 @@ searchbar.addEventListener('submit', searchItem)
 
 //handle click gender button event on navigation bar
 genderContainer.addEventListener('click',(e)=>selectGender(e));
-mobileGenderContainer.addEventListener('click',(e)=>selectGender(e))
+mobileGenderContainer.addEventListener('click',(e)=>selectGender(e));
+
+//add item to shopping cart
+productContainer.addEventListener('click',addToCart);
+
+cartBody.addEventListener('click', clickQuantityButton)
 
 // handle events when window is scrolled
 window.addEventListener('scroll',()=>{
@@ -147,6 +184,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.body.style.display="block";
 
     // creates cards and append them to procuct container
-    loadFirstCards()
+    loadFirstCards();
+    //initialize cart accroding to cart items in local storage
+    updateCart();
 })
 
