@@ -77,7 +77,7 @@ export function createcartItemNode(cartItem){
          <div class="cart-item" id=${cartItem.id}>
               <ul class="cart-item-list">
                 <li class="cart-item-left">
-                   <img src="../assets/productImages/${cartItem.img}" alt="" class="cart-item-img">
+                   <img src=${require("../assets/productImage/" + cartItem.img)}alt="" class="cart-item-img">
                 </li>
                 <li class="cart-item-middle">
                   <p class="cart-item-name">${cartItem.name}</p>
