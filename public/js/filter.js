@@ -59,7 +59,7 @@ export function loadFirstCards(){
         // after the restoration
         setTimeout(()=>{
           window.scrollTo(0,-1);
-        },100)
+        },300)
     }).catch(err=>{
         console.log(err)
     })
