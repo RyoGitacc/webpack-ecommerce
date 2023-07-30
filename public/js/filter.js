@@ -55,7 +55,11 @@ export function loadFirstCards(){
         items.forEach(i=>{
             productContainer.appendChild(createCard(i))
         })
-        window.scrollTo(0,-1)
+        // scroll position restoration triggers when refresh. this settimeout enables scroll top
+        // after the restoration
+        setTimeout(()=>{
+          window.scrollTo(0,-1);
+        },100)
     }).catch(err=>{
         console.log(err)
     })
