@@ -188,8 +188,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     loadFirstCards();
     //initialize cart accroding to cart items in local storage
     updateCart();
+    window.scrollTo(0,-1);
 })
 
-window.addEventListener('load',()=>{
-    scrollTo(0,0)
-})

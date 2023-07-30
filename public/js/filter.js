@@ -141,7 +141,7 @@ export function filterItems(selectedCategory, selectedType,max,min){
 //filter items by gender
 export function selectGender(e){
   if(e.target.tagName === 'LABEL'){
-    console.log(e.target.innerText)
+  
     // contentsTitle.scrollIntoView({behavior:'smooth', block:'start'});
     // resetSelect();
     // resetSlider();
