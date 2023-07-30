@@ -7,6 +7,9 @@
     padding: 0;
     font-family: 'Ysabeau SC', sans-serif;
 }
+html{
+    touch-action: manipulation;
+}
 
 /* style for feature lists */
 .feature-list{

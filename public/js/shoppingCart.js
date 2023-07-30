@@ -1,11 +1,9 @@
 import { createcartItemNode } from "./createNodeFromText";
 import { removeChildren } from "./filter";
 const checkoutBtn = document.querySelector(".checkout-btn");
-
-
-export const cartBody=document.querySelector(".cart-body");
-export const totalNumNode= document.querySelector('.total-num');
-export const totalPaymentNode= document.querySelector(".total-payment");
+const cartBody=document.querySelector(".cart-body");
+const totalNumNode= document.querySelector('.total-num');
+const totalPaymentNode= document.querySelector(".total-payment");
 
 let numOfItem=0;
 let totalPrice=0;
@@ -73,5 +71,5 @@ export function clickQuantityButton(e){
 }
 
 
-// checkoutBtn.addEventListener('click',()=>alert( `Payment due is $${totalPrice}`))
+checkoutBtn.addEventListener('click',()=>alert( `Payment due is $${totalPrice}`))
 

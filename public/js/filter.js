@@ -2,16 +2,28 @@ import { createCard,spinner} from "./createNodeFromText.js";
 // import { createCard, removeChildren} from "./card.js";
 // import { stringToNode } from "./shoppingCart.js";
 const productContainer=document.querySelector(".product-container");
+const mainContents=document.querySelector(".main-contents")
 const sort = document.querySelector(".sort");
 
 
-const URL = "https://stormy-tundra-83234-974f64c39645.herokuapp.com/"
-// const URL = "http://localhost:8080/"
+// const URL = "https://stormy-tundra-83234-974f64c39645.herokuapp.com/"
+const URL = "http://localhost:8080/"
 
 
 
 export let hasMoreItems=true;
 export let isLoading=false;
+
+export function changeTextInFilterBtn(filterBtn){
+  if(filterBtn.classList.contains('open')){
+      filterBtn.innerHTML = "+ add filter";
+      filterBtn.classList.remove('open');
+  }
+  else{
+      filterBtn.innerHTML= "- close filter";
+      filterBtn.classList.add('open')
+  }
+}
 
 // function to remove all children
 export function removeChildren(parent){
@@ -64,7 +76,7 @@ export function loadMoreCards(){
              productContainer.appendChild(createCard(i))
           })
           isLoading=false;
-          },1500)
+          },1000)
         }
     }).catch(err=>{
        console.log(err); spinner.remove()
@@ -94,8 +106,7 @@ function fetchFilterdItems(url,data,isSort){
   isLoading=true;
   removeChildren(productContainer);
   productContainer.appendChild(spinner)
-  scrollTo(0, 0);
-  // contentsTitle.scrollIntoView({behavior:'smooth', block:'start'});
+  mainContents.scrollIntoView({behavior:"smooth", block:"start"})
   fetchPostRequest(url,data).then(items=>{
     setTimeout(()=>{
           spinner.remove(); isLoading=false;

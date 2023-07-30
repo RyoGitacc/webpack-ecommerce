@@ -4,14 +4,15 @@ import '../css/carousel.scss'
 import '../css/select.scss'
 import '../css/slider.scss'
 import '../css/shoppingCart.scss'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { moveNavBottomMobile, triggerClickEvent} from './navbar.js'
 import {openSelect,closeSelect,selectOption,selectedCategory,selectedType} from './select.js'
 import { handleSlider, min,max} from './slider';
 import { clickQuantityButton, updateCart } from './shoppingCart'
-import { loadMoreCards, loadFirstCards,selectGender, filterItems,hasMoreItems, isLoading, sortItems, searchItem} from './filter'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Collapse,Carousel,Spinner } from "bootstrap";
-import * as bootstrap from 'bootstrap'
+import { loadMoreCards, loadFirstCards,selectGender, filterItems,hasMoreItems, isLoading, sortItems, 
+         changeTextInFilterBtn,searchItem} from './filter'
+
+
 
 //import icons
 import cart from '../assets/icons/cart.svg';
@@ -27,10 +28,6 @@ import poloShirt from '../assets/image/polo-shirt.webp'
 import sleeveless from '../assets/image/sleevelesstop.webp'
 import sportbra from '../assets/image/sportbra.webp'
 
-
-
-
-
 const genderContainer=document.querySelector('.gender-container');
 const mobileGenderContainer=document.querySelector('.mobile-gender-container')
 const sort = document.querySelector(".sort");
@@ -39,11 +36,12 @@ const list2 = document.querySelector('.list2');
 const shadow = document.querySelector('.shadow');
 const productContainer=document.querySelector(".product-container");
 const cartBody = document.querySelector('.cart-body');
+const filterBtn=document.querySelector('.filter-btn');
+
 
 //set icons to navigation bar
 const iconsForNavbar=[search,login,heart,cart]
 const navIcons = document.querySelectorAll('.nav-icon');
-console.log(navIcons)
 iconsForNavbar.forEach((i,index)=>{
     navIcons[index].src=i;
 })
@@ -112,7 +110,7 @@ function checkScrollToBottom(){
      // get position of the bottom of the window in pixel
      const offsetY = currentScroll + window.innerHeight;
      // console.log(offsetY, "offset")
-     if(offsetY >= document.body.offsetHeight - 50  && hasMoreItems && !isLoading){
+     if(offsetY >= document.body.offsetHeight - 100  && hasMoreItems && !isLoading){
        loadMoreCards()
        console.log('bottom')
      }
@@ -123,7 +121,6 @@ function addToCart(e){
     if(e.target.matches(".add-cart-btn")){
         const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
         const clickedItem=JSON.parse(e.target.getAttribute('data'));
-         console.log(clickedItem)
         if(cartItems.length > 0){
             if(cartItems.find(c=>c.id === clickedItem.id) === undefined){
                 cartItems.push(clickedItem);
@@ -147,6 +144,7 @@ function addToCart(e){
     }
 }
 
+
 // trigger filter events
 filterList.addEventListener('click',(e)=>triggerFilterEvent(e));
 
@@ -167,7 +165,10 @@ mobileGenderContainer.addEventListener('click',(e)=>selectGender(e));
 //add item to shopping cart
 productContainer.addEventListener('click',addToCart);
 
-cartBody.addEventListener('click', clickQuantityButton)
+cartBody.addEventListener('click', clickQuantityButton);
+
+//trigger this event when filter btn is clicked and chenge text inside the btn;
+filterBtn.addEventListener('click',()=>changeTextInFilterBtn(filterBtn));
 
 // handle events when window is scrolled
 window.addEventListener('scroll',()=>{
