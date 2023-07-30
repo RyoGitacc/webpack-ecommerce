@@ -110,7 +110,7 @@ function checkScrollToBottom(){
      // get position of the bottom of the window in pixel
      const offsetY = currentScroll + window.innerHeight;
      // console.log(offsetY, "offset")
-     if(offsetY >= document.body.offsetHeight - 100  && hasMoreItems && !isLoading){
+     if(offsetY >= document.body.offsetHeight - 150  && hasMoreItems && !isLoading){
        loadMoreCards()
        console.log('bottom')
      }

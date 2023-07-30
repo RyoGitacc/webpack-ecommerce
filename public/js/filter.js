@@ -1,6 +1,4 @@
 import { createCard,spinner} from "./createNodeFromText.js";
-// import { createCard, removeChildren} from "./card.js";
-// import { stringToNode } from "./shoppingCart.js";
 const productContainer=document.querySelector(".product-container");
 const mainContents=document.querySelector(".main-contents")
 const sort = document.querySelector(".sort");
