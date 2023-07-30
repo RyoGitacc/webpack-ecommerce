@@ -183,10 +183,13 @@ window.addEventListener('scroll',()=>{
 document.addEventListener('DOMContentLoaded',()=>{
     // display DOM
     document.body.style.display="block";
-    scrollTo(0,0)
+   
     // creates cards and append them to procuct container
     loadFirstCards();
     //initialize cart accroding to cart items in local storage
     updateCart();
 })
 
+window.addEventListener('load',()=>{
+    scrollTo(0,0)
+})
