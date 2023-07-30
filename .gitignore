@@ -1,0 +1,20 @@
+node_modules/
+
+# Build output (if any)
+build/
+dist/
+out/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Editor-specific files
+.vscode/
+.idea/
+
+# Dependency lock files (if you're using Yarn or npm)
+yarn.lock
+package-lock.json
