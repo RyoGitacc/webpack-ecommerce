@@ -55,6 +55,7 @@ export function loadFirstCards(){
         items.forEach(i=>{
             productContainer.appendChild(createCard(i))
         })
+        window.scrollTo(0,-1);
     }).catch(err=>{
         console.log(err)
     })
