@@ -4,8 +4,8 @@ const mainContents=document.querySelector(".main-contents")
 const sort = document.querySelector(".sort");
 
 
-const URL = "https://stormy-tundra-83234-974f64c39645.herokuapp.com/"
-// const URL = "http://localhost:8080/"
+// const URL = "https://stormy-tundra-83234-974f64c39645.herokuapp.com/"
+const URL = "http://localhost:8080/"
 
 
 
@@ -51,15 +51,19 @@ export function fetchItems(URL){
 
 // fucntin to first append cards to product container when page loaded
 export function loadFirstCards(){
+    isLoading = true;
     fetchItems(URL + 'data').then(items=>{
         items.forEach(i=>{
             productContainer.appendChild(createCard(i))
         })
         // scroll position restoration triggers when refresh. this settimeout enables scroll top
-        // after the restoration
+        // after the restoration. 3ms is set to be compatible for many browsers
         setTimeout(()=>{
           window.scrollTo(0,-1);
         },300)
+        setTimeout(()=>{
+          isLoading=false;
+        },500)
     }).catch(err=>{
         console.log(err)
     })
