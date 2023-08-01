@@ -32,6 +32,7 @@ const genderContainer=document.querySelector('.gender-container');
 const mobileGenderContainer=document.querySelector('.mobile-gender-container')
 const sort = document.querySelector(".sort");
 const searchbar= document.querySelector('.searchbar');
+const searchCloseContainer=document.querySelector('.search-close-container')
 const list2 = document.querySelector('.list2');
 const shadow = document.querySelector('.shadow');
 const productContainer=document.querySelector(".product-container");
@@ -157,6 +158,7 @@ navBottom.addEventListener('click',e=>triggerClickEvent(e));
 
 // trigger searching items
 searchbar.addEventListener('submit', searchItem)
+searchCloseContainer.addEventListener('click',searchItem)
 
 //handle click gender button event on navigation bar
 genderContainer.addEventListener('click',(e)=>selectGender(e));
