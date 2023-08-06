@@ -12,6 +12,7 @@
     height: 100%;
     background-size: cover;
     background-position: center;
+    transition: transform .6s ease-in-out 1s !important;
     
 }
 .carousel-inner .carousel-item:nth-child(1){
