@@ -6,15 +6,15 @@
 .carousel-inner{
     width: 100%;
     height: 100%;
-    overflow: visible;
 }
 .carousel-item{
     width: 100%;
     height: 100%;
     background-size: cover;
     background-position: center;
+    background-color: blue;
 }
-.carousel-inner .carousel-item:nth-child(1){
+/*.carousel-inner .carousel-item:nth-child(1){
   background-image: url('../assets/image/guy-in-shirt.webp');
 }
 .carousel-inner .carousel-item:nth-child(2){
@@ -25,7 +25,7 @@
 }
 .carousel-inner .carousel-item:nth-child(4){
     background-image: url('../assets/image/polo-shirt.webp');
-}
+}*/
 
 
 .carousel-indicators button{
