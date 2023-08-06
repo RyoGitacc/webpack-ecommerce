@@ -23,10 +23,7 @@ import search from '../assets/icons/search.svg';
 import search2 from '../assets/icons/search2.svg';
 
 //import images
-import guyInShirt from '../assets/image/guy-in-shirt.webp'
-import poloShirt from '../assets/image/polo-shirt.webp'
-import sleeveless from '../assets/image/sleevelesstop.webp'
-import sportbra from '../assets/image/sportbra.webp'
+
 
 const genderContainer=document.querySelector('.gender-container');
 const mobileGenderContainer=document.querySelector('.mobile-gender-container')
@@ -51,11 +48,11 @@ const searchbarIcon = document.querySelector('.searchbar-icon');
 searchbarIcon.src=search2;
 
 //set images to carousel
-const imgsForCarousel = [guyInShirt,sleeveless,sportbra,poloShirt];
-const carouselImgs = document.querySelectorAll('.carousel-img')
-imgsForCarousel.forEach((c,index)=>{
-    carouselImgs[index].src=c;
-})
+// const imgsForCarousel = [guyInShirt,sleeveless,sportbra,poloShirt];
+// const carouselImgs = document.querySelectorAll('.carousel-img')
+// imgsForCarousel.forEach((c,index)=>{
+//     carouselImgs[index].src=c;
+// })
 
 //set svg arrow down to select.ejs
 const downArrowSVGs=document.querySelectorAll('.down-arrow');
