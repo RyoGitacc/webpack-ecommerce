@@ -6,10 +6,10 @@ import '../css/slider.scss'
 import '../css/shoppingCart.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { moveNavBottomMobile, triggerClickEvent} from './navbar.js'
-import {openSelect,closeSelect,selectOption,selectedCategory,selectedType} from './select.js'
-import { handleSlider, min,max} from './slider';
+import {openSelect,closeSelect,selectOption,selectedCategory,selectedType, resetSelect} from './select.js'
+import { handleSlider, min,max,resetSlider} from './slider';
 import { clickQuantityButton, updateCart } from './shoppingCart'
-import { loadMoreCards, loadFirstCards,selectGender, filterItems,hasMoreItems, isLoading, sortItems, 
+import { loadMoreCards, loadFirstCards, filterItems, sortItems, 
          changeTextInFilterBtn,searchItem} from './filter'
 
 
@@ -35,6 +35,8 @@ const productContainer=document.querySelector(".product-container");
 const cartBody = document.querySelector('.cart-body');
 const filterBtn=document.querySelector('.filter-btn');
 
+let gender="";
+
 
 //set icons to navigation bar
 const iconsForNavbar=[search,login,heart,cart]
@@ -47,12 +49,6 @@ iconsForNavbar.forEach((i,index)=>{
 const searchbarIcon = document.querySelector('.searchbar-icon');
 searchbarIcon.src=search2;
 
-//set images to carousel
-// const imgsForCarousel = [guyInShirt,sleeveless,sportbra,poloShirt];
-// const carouselImgs = document.querySelectorAll('.carousel-img')
-// imgsForCarousel.forEach((c,index)=>{
-//     carouselImgs[index].src=c;
-// })
 
 //set svg arrow down to select.ejs
 const downArrowSVGs=document.querySelectorAll('.down-arrow');
@@ -88,7 +84,7 @@ function triggerFilterEvent(e){
         selectOption(e.target)
    }
    else if(e.target.classList.contains('submit-btn')){
-        filterItems(selectedCategory,selectedType,max,min)
+       filterItems(gender,selectedCategory,selectedType,max,min)
    }  
 }
 
@@ -107,9 +103,8 @@ function checkScrollToBottom(){
      // get position of the bottom of the window in pixel
      const offsetY = currentScroll + window.innerHeight;
      // console.log(offsetY, "offset")
-     if(offsetY >= document.body.offsetHeight - 150  && hasMoreItems && !isLoading){
+     if(offsetY >= document.body.offsetHeight - 150 ){
        loadMoreCards()
-       console.log('bottom')
      }
 }
 
@@ -141,23 +136,40 @@ function addToCart(e){
     }
 }
 
+function filterByGender(e){
+    if(e.target.tagName === 'LABEL'){
+       gender=e.target.innerText;   
+       resetSelect();
+       resetSlider();
+       sort.value="all"
+       filterItems(gender,selectedCategory,selectedType,max,min);    
+    }
+
+}
 
 // trigger filter events
 filterList.addEventListener('click',(e)=>triggerFilterEvent(e));
 
 // trigger sorting events
-sort.addEventListener('change',()=>sortItems(sort.value));
+sort.addEventListener('change', async ()=>{
+   await sortItems(sort.value)
+});
 
 //navigation bar event handler
 const navBottom=document.querySelector('.navigation-bottom');
 navBottom.addEventListener('click',e=>triggerClickEvent(e));
 
 // trigger searching items
-searchbar.addEventListener('submit', searchItem)
+searchbar.addEventListener('submit', ()=>{
+    resetSelect();
+    resetSlider();
+    sort.value="all"
+    searchItem
+})
 
 //handle click gender button event on navigation bar
-genderContainer.addEventListener('click',(e)=>selectGender(e));
-mobileGenderContainer.addEventListener('click',(e)=>selectGender(e));
+genderContainer.addEventListener('click',(e)=>filterByGender(e));
+mobileGenderContainer.addEventListener('click',(e)=>filterByGender(e));
 
 //add item to shopping cart
 productContainer.addEventListener('click',addToCart);

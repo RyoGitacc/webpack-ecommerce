@@ -1,16 +1,21 @@
+
 import { createCard,spinner} from "./createNodeFromText.js";
 const productContainer=document.querySelector(".product-container");
 const mainContents=document.querySelector(".main-contents")
+
 const sort = document.querySelector(".sort");
 
-
-const URL = "https://stormy-tundra-83234-974f64c39645.herokuapp.com/"
-// const URL = "http://localhost:8080/"
+// const URL = "https://stormy-tundra-83234-974f64c39645.herokuapp.com/"
+const URL = "http://localhost:8080/"
 
 
 
 export let hasMoreItems=true;
 export let isLoading=false;
+
+let currentItems=[];
+let loadCount=1;
+const limit = 4;
 
 export function changeTextInFilterBtn(filterBtn){
   if(filterBtn.classList.contains('open')){
@@ -52,45 +57,46 @@ export function fetchItems(URL){
 // fucntin to first append cards to product container when page loaded
 export function loadFirstCards(){
     isLoading = true;
-    fetchItems(URL + 'data').then(items=>{
-        items.forEach(i=>{
-            productContainer.appendChild(createCard(i))
-        })
-        // scroll position restoration triggers when refresh. this settimeout enables scroll top
-        // after the restoration. 3ms is set to be compatible for many browsers
-        setTimeout(()=>{
-          window.scrollTo(0,-1);
-        },300)
-        setTimeout(()=>{
-          isLoading=false;
-        },500)
-    }).catch(err=>{
-        console.log(err)
+    fetchItems(URL + "data").then(items=>{
+      currentItems=items;
+      const firstCards = items.slice(0,limit);
+      firstCards.forEach(i=>{
+                productContainer.appendChild(createCard(i))
+      })
     })
+     // scroll position restoration triggers when refresh. this settimeout enables scroll top
+     // after the restoration. 3ms is set to be compatible for many browsers
+    setTimeout(()=>{
+            window.scrollTo(0,-1);
+          },300)
+          setTimeout(()=>{
+            isLoading=false;
+          },500)
 }
 
 // function to load more items
 export function loadMoreCards(){
+  if(hasMoreItems && !isLoading){
     isLoading=true;
-    fetchItems(URL + 'loadMore').then(items=>{
-      productContainer.appendChild(spinner);
-      if(items.length === 0){
-         spinner.remove(); isLoading=false; hasMoreItems=false;
-        }else{
-          setTimeout(()=>{
+    productContainer.appendChild(spinner);
+    const slicedItems = currentItems.slice((loadCount * limit), (loadCount * limit + limit));
+      if(slicedItems.length === 0){
+          spinner.remove(); isLoading=false; hasMoreItems=false;
+      }else{
+         setTimeout(()=>{
            spinner.remove();
-           items.forEach(i=>{
-             productContainer.appendChild(createCard(i))
-          })
-          isLoading=false;
-          },1000)
-        }
-    }).catch(err=>{
-       console.log(err); spinner.remove()
-    })
- }
+           slicedItems.forEach(i=>{
+               productContainer.appendChild(createCard(i))
+           })
+           isLoading=false;
+           loadCount++;
+         },1000)
+     }
+  }
+}
 
-function fetchPostRequest(url,data){
+
+function sendPostRequest(url,data){
   return new Promise((resolve,reject)=>{
     fetch(url,{
     method:"POST",
@@ -108,20 +114,24 @@ function fetchPostRequest(url,data){
 }
 
 
-function fetchFilterdItems(url,data,isSort){
+function fetchFilterdItems(url,condition){
   hasMoreItems=true;
   isLoading=true;
   removeChildren(productContainer);
   productContainer.appendChild(spinner)
   mainContents.scrollIntoView({behavior:"smooth", block:"start"})
-  fetchPostRequest(url,data).then(items=>{
+
+  
+  sendPostRequest(url,condition).then(items=>{
+    currentItems = items;
+    const slicedItems = items.slice(0,limit);
     setTimeout(()=>{
           spinner.remove(); isLoading=false;
-          items.forEach(f=>{
+          slicedItems.forEach(f=>{
               productContainer.appendChild(createCard(f))
           })
         },1000)
-        if(!isSort) sort.value="all" 
+        loadCount=1;
   }).catch(err=>{
     spinner.remove(); isLoading=false;
     alert("something went wrong. Please try again" + err)
@@ -129,7 +139,7 @@ function fetchFilterdItems(url,data,isSort){
 }
 
 //submit data to filter items by filter condition
-export function filterItems(selectedCategory, selectedType,max,min){
+export function filterItems(gender,selectedCategory, selectedType,max,min){
 
   if(min > max){
     const temp = min;
@@ -138,6 +148,7 @@ export function filterItems(selectedCategory, selectedType,max,min){
   }
 
   const condition={
+    gender:gender,
     category:selectedCategory,
     type:selectedType,
     min,
@@ -147,26 +158,50 @@ export function filterItems(selectedCategory, selectedType,max,min){
 }
 
 
-//filter items by gender
-export function selectGender(e){
-  if(e.target.tagName === 'LABEL'){
-  
-    // contentsTitle.scrollIntoView({behavior:'smooth', block:'start'});
-    // resetSelect();
-    // resetSlider();
-    const gender = e.target.innerText;
-    console.log(gender)
-    fetchFilterdItems(URL + "gender", {gender})
-  }
-}
+
 
 //sort items
-export function sortItems(value){
- if(value){
-   const sortBy = value;
-   fetchFilterdItems(URL + "sort", {sortBy}, true)
- }
+export async function sortItems(value){
+  if(value){
+           isLoading=true;
+           hasMoreItems=true;
+           loadCount =1;
+
+           const sortCondition = {
+                   sortBy:value,
+                   items:currentItems
+           }
+
+           removeChildren(productContainer);
+           productContainer.appendChild(spinner)
+           mainContents.scrollIntoView({behavior:"smooth", block:"start"})
+  try{
+    const response = await fetch(URL + "sort",
+    {
+      method:"POST",
+      headers:{
+        'Content-Type':'application/json'
+      },
+    body:JSON.stringify(sortCondition)})
+
+    if(response.status !== 200)   throw new Error("something went wrong" + response.status)
+    currentItems = await response.json();  
+    const slicedItems = currentItems.slice(0,limit);
+
+    setTimeout(()=>{
+            spinner.remove(); isLoading=false;
+            slicedItems.forEach(f=>{
+                productContainer.appendChild(createCard(f))
+            })
+    },1000)
+    
+  }catch(err){
+    isLoading=false; console.log(err);
+  }
 }
+}
+
+
 
 //search items 
 export function searchItem(e){

@@ -2,6 +2,16 @@
 export let selectedCategory="";
 export let selectedType="";
 
+export function resetSelect(){
+    const selectedValues = document.querySelectorAll('.selected-value');
+    const initialValues=['All categories', "Any type"]
+    initialValues.forEach((i,index)=>{
+        selectedValues[index].innerText=i;
+    })
+    selectedCategory="";
+    selectedType="";
+}
+
 export function openSelect(target){
     const selectMenu = target.nextElementSibling;
     const numOfOptions = selectMenu.children.length;
